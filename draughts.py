@@ -10,7 +10,7 @@ WD = "%"
 #White King
 WK = '£'
 #Empty Cell
-EC = ' '
+EC = '_'
 #Black Draught
 BD = "&"
 #Black King
@@ -36,18 +36,21 @@ grid = [[BD, EC, BD, EC, BD, EC, BD, EC],
 #Prints the board
 def print_board(grid):
     acc = 0
-    print(" 0    1    2    3    4    5    6    7   ")
+    print("   0    1    2    3    4    5    6    7   ")
     for row in grid:
         print(acc, row)
         acc = acc + 1
 
-def move():
-    src_x = int(input("Enter an x coord for where to move from"))
-    src_y = int(input("Enter a y coord for where to move from"))
-    dst_x = int(input("Enter an x coord for where to move to"))
-    dst_x = int(input("Enter a y coord for where to move to"))
-    if grid[src_y][src_x] == EC:
+def wrong_move():
+    start_x = int(input("Enter an x coord for where to move from"))
+    start_y = int(input("Enter a y coord for where to move from"))
+    end_x = int(input("Enter an x coord for where to move to"))
+    end_y = int(input("Enter a y coord for where to move to"))
+    if grid[start_y][start_x] == EC:
         print("Empty cell selected try again")
-        return move()
+        return wrong_move()
+    if grid[start_y][start_x] == BD:
+        grid[start_y][start_x] = EC
+        grid[end_x][end_y] == BD
 
 
