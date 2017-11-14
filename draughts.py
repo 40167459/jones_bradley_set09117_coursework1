@@ -41,7 +41,7 @@ def print_board(grid):
         print(acc, row)
         acc = acc + 1
 
-def wrong_move():
+def move():
     start_x = int(input("Enter an x coord for where to move from"))
     start_y = int(input("Enter a y coord for where to move from"))
     end_x = int(input("Enter an x coord for where to move to"))
@@ -51,6 +51,7 @@ def wrong_move():
         return wrong_move()
     if grid[start_y][start_x] == BD:
         grid[start_y][start_x] = EC
-        grid[end_x][end_y] == BD
+        grid[end_y][end_x] = BD
 
 
+def jump():
