@@ -16,11 +16,8 @@ BD = "b"
 #Black King
 BK = 'B'
 #players
-
-#END OF CONSTANTS SECTION
-
-
 Players = Enum("Players", "White Black")
+#END OF CONSTANTS SECTION
 
 #Defines the game board
 """Initialize the new game grid"""
@@ -53,6 +50,7 @@ def print_board(grid):
 
 def move(value_package, grid):
     if value_package["cur_turn"] == Players.White:
+        print_board(grid)
         print("White Turn\n")
         start_x = int(input("Enter an x coord for where to move from: "))
         start_y = int(input("Enter a y coord for where to move from: "))
@@ -70,8 +68,10 @@ def move(value_package, grid):
         end_x = int(input("Enter an x coord for where to move to: "))
         end_y = int(input("Enter a y coord for where to move to: "))
         #Define Mid points here
+        midval_x = abs(start_x + end_x) // 2
+        midval_y = abs(end_y + end_y) // 2
+        if Turns["Turn"] == players.White:
 
-        
         #Error handling
         #For when an occupied cell is selected
         if grid[end_y][end_x] == BD:
@@ -89,6 +89,30 @@ def move(value_package, grid):
         #Else indicates the start of the movement logic   
         else:
 
+            if end_x > start_x + 2:
+                print("Can not move that far away")
+                return move(value_package, grid)
+
+            if end_x < start_x - 2:
+                print("Can not move that far away")
+                return move(value_package, grid)
+
+            if end_y > start_y + 2:
+                print("Can not move that far away")
+                return move(value_package, grid)
+
+            if end_y < start_y - 2:
+                print("Can not move that far away")
+                return move(value_package, grid)
+
+            if grid[start_x] == grid[end_x]:
+                print("You can only move diagonally")
+                return move(value_package, grid)
+
+            if grid[start_x] == grid[end_x]:
+                print("You can only move diagonally")
+                return move(value_package, grid)
+
             else:
                 grid[start_y][start_x] = EC
                 grid[end_y][end_x] = WD
@@ -98,13 +122,13 @@ def move(value_package, grid):
 
     
     if value_package["cur_turn"] == Players.Black:
+        print_board(grid)
         print("Black Turn\n")
         start_x = int(input("Enter an x coord for where to move from: "))
         start_y = int(input("Enter a y coord for where to move from: "))
         #Define Mid points here
-
-
-
+        midval_x = abs(start_x + end_x) // 2
+        midval_y = abs(end_y + end_y) // 2
         
         #When error handling for when an empty cell or occupied cell is selected
         if grid[start_y][start_x] == EC:
@@ -138,10 +162,29 @@ def move(value_package, grid):
         #Else indicates the start of the movement logic
         else:
 
-            if grid[mid_y][mid_x] == WD or grid[mid_y][mid_x] == WK:
-                grid[start_y][start_x]
-                
+            if end_x > start_x + 2:
+                print("Can not move that far away")
+                return move(value_package, grid)
 
+            if end_x < start_x - 2:
+                print("Can not move that far away")
+                return move(value_package, grid)
+
+            if end_y > start_y + 2:
+                print("Can not move that far away")
+                return move(value_package, grid)
+
+            if end_y < start_y - 2:
+                print("Can not move that far away")
+                return move(value_package, grid)
+
+            if grid[start_x] == grid[end_x]:
+                print("You can only move diagonally")
+                return move(value_package, grid)
+
+            if grid[start_x] == grid[end_x]:
+                print("You can only move diagonally")
+                return move(value_package, grid)
 
             else:
                 grid[start_y][start_x] = EC
