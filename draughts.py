@@ -116,16 +116,12 @@ def move(value_package, grid, wpc, bpc):
                 return move(value_package, grid, wpc, bpc)
 
             #If Y coordinate is equal to 7, the draught becomes a King
-            if end_y == 7:
-                grid[7][end_x] = BK
-                grid[][]
+            if end_y == 0:
+                grid[0][end_x] = WK
+                grid[start_y][start_x] = EC
                 
              #These if statements ensure that the move is legal
             if end_x > start_x + 2:
-                print("Cannot move that far away")
-                return move(value_package, grid, wpc, bpc)
-
-            if end_x < start_x - 2:
                 print("Cannot move that far away")
                 return move(value_package, grid, wpc, bpc)
 
@@ -178,13 +174,6 @@ def move(value_package, grid, wpc, bpc):
         mid_y = abs(start_y + end_y) // 2
             
         #Error handling
-        #For if the player attempts to capture his own pieces
-        if grid[mid_y][mid_x] == BD:
-            print("Illegal move, please try again")
-            return move(value_package, grid, wpc, bpc)
-        if grid[mid_y][mid_x] == BK:
-            print("Illegal move, please try again")
-            return move(value_package, grid, wpc, bpc)
         #For when an occupied cell is selected as the end point
         if grid[end_y][end_x] == BD:
             print("An occupied cell has been selected, please try again")
@@ -198,14 +187,11 @@ def move(value_package, grid, wpc, bpc):
         if grid[end_y][end_x] == WK:
             print("An occupied cell has been selected, please try again")
             return move(value_package, grid, wpc, bpc)
-            
+        
         #Else indicates the start of the movement logic
         else:
-            if end_y == 7:
-                grid[7][end_x] = BK
-                grid[][]
 
-            #Taking a piece
+             #Taking a piece
             if grid[mid_y][mid_x] == WD or grid[mid_y][mid_x] == WK:
                 grid[start_y][start_x] = EC
                 grid[end_y][end_x] = BD
@@ -214,25 +200,29 @@ def move(value_package, grid, wpc, bpc):
                 value_package["cur_turn"] = Players.White
                 print("White pieces remaining: ", wpc)
                 print_board(grid)
-                if (wpc == 0):
+                if (bpc == 0):
                     print("Black team wins")
                     quit()
 
                 else:
                      return move(value_package, grid, wpc, bpc)
             
-                
-            #These if statements ensure that the move is legal
+
+            #For if the player attempts to capture his own pieces
+           # if grid[mid_y][mid_x] == BD:
+            #    print("Illegal move, please try again")
+            #    return move(value_package, grid, wpc, bpc)
+           # if grid[mid_y][mid_x] == BK:
+            #   print("Illegal move, please try again")
+            #   return move(value_package, grid, wpc, bpc)
+
             #If Y coordinate is equal to 7, the draught becomes a King
             if end_y == 7:
                 grid[7][end_x] = BK
-                grid[][]
-            
+                grid[start_y][start_x] = EC
+                
+             #These if statements ensure that the move is legal
             if end_x > start_x + 2:
-                print("Cannot move that far away")
-                return move(value_package, grid, wpc, bpc)
-
-            if end_x < start_x - 2:
                 print("Cannot move that far away")
                 return move(value_package, grid, wpc, bpc)
 
@@ -256,7 +246,7 @@ def move(value_package, grid, wpc, bpc):
                 grid[start_y][start_x] = EC
                 grid[end_y][end_x] = BD
                 print_board(grid)
-                value_package["cur_turn"] = Players.White                
+                value_package["cur_turn"] = Players.White
                 return move(value_package, grid, wpc, bpc)
     
 
