@@ -69,7 +69,7 @@ def move(value_package, grid, wpc, bpc):
         end_x = int(input("Enter an x coord for where to move to: "))
         end_y = int(input("Enter a y coord for where to move to: "))
         
-        #Define Mid points here
+        #The mid points are defined here
         mid_x = abs(start_x + end_x) // 2
         mid_y = abs(start_y + end_y) // 2
 
@@ -169,7 +169,7 @@ def move(value_package, grid, wpc, bpc):
         end_x = int(input("Enter an x coord for where to move to: "))
         end_y = int(input("Enter a y coord for where to move to: "))
 
-        #Mid points defined here
+        #The Mid points defined here
         mid_x = abs(start_x + end_x) // 2
         mid_y = abs(start_y + end_y) // 2
             
@@ -249,6 +249,7 @@ def move(value_package, grid, wpc, bpc):
                 value_package["cur_turn"] = Players.White
                 return move(value_package, grid, wpc, bpc)
     
-
+def undo():
+    turtle.undo()
 
 main(grid, wpc, bpc)
