@@ -69,7 +69,7 @@ def move(value_package, grid, wpc, bpc):
         end_x = int(input("Enter an x coord for where to move to: "))
         end_y = int(input("Enter a y coord for where to move to: "))
         
-        #The mid points are defined here
+        #Define Mid points here
         mid_x = abs(start_x + end_x) // 2
         mid_y = abs(start_y + end_y) // 2
 
@@ -149,6 +149,7 @@ def move(value_package, grid, wpc, bpc):
                 return move(value_package, grid, wpc, bpc)
 
 
+
     
     if value_package["cur_turn"] == Players.Black:
         print("Black Turn\n")
@@ -169,7 +170,7 @@ def move(value_package, grid, wpc, bpc):
         end_x = int(input("Enter an x coord for where to move to: "))
         end_y = int(input("Enter a y coord for where to move to: "))
 
-        #The Mid points defined here
+        #Define Mid points here
         mid_x = abs(start_x + end_x) // 2
         mid_y = abs(start_y + end_y) // 2
             
@@ -248,8 +249,37 @@ def move(value_package, grid, wpc, bpc):
                 print_board(grid)
                 value_package["cur_turn"] = Players.White
                 return move(value_package, grid, wpc, bpc)
+
+#Undo function
+def undo(value_package, grid, wpc, bpc):
+    if grid[end_y][end_x] == BD or grid[end_y][end_x] == BK:
+        return undo(value_package, grid, wpc, bpc)
+
+    #Asks the user if they would like to undo the move
+    answer = input("Would you like to undo this move? Y/N: ")
+
+    if answer == y or answer == Y:
+        grid[start_y][start_x] = BD or grid[start_y][start_x] = BK
+        grid[mid_y][mid_x] = WD or grid[mid_y][mid_x] = WK
+        grid[end_y][end_x] = EC
+        return undo(value_package, grid, wpc, bpc)
+
+    if grid[end_y][end_x] == WD or grid[end_y][end_x] == WK:
+        return undo(value_package, grid, wpc, bpc)
+
+    #Asks the user if they would like to undo the move
+    answer = input("Would you like to undo this move? Y/N: ")
+
+    if answer == y or answer == Y:
+        grid[start_y][start_x] = WD or grid[start_y][start_x] = WK
+        grid[mid_y][mid_x] = BD or grid[mid_y][mid_x] = BK
+        grid[end_y][end_x] = EC
+        return undo(value_package, grid, wpc, bpc)
+        
+        
     
-def undo():
-    turtle.undo()
+        
+
+
 
 main(grid, wpc, bpc)
