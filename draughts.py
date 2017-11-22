@@ -6,15 +6,21 @@ from enum import Enum
 grid_height = 8
 grid_width = 8
 #White Draught
-WD = "w"
+WD = 'w'
 #White King
 WK = 'W'
 #Empty Cell
 EC = '_'
 #Black Draught
-BD = "b"
+BD = 'b'
 #Black King
 BK = 'B'
+#Yes value
+Y = 'Y'
+y = 'y'
+#No Value
+n = 'n'
+N = 'N'
 #players
 Players = Enum("Players", "White Black")
 #END OF CONSTANTS SECTION
@@ -73,6 +79,22 @@ def move(value_package, grid, wpc, bpc):
         mid_x = abs(start_x + end_x) // 2
         mid_y = abs(start_y + end_y) // 2
 
+        #Asks the user if they would like to undo the move
+        undo_answer =  print(input("Would you like to undo this move? Y/N: "))
+
+        #Starts the undo function, if yes is selected
+        if undo_answer == y or undo_answer == Y:
+            grid[start_y][start_x] = WD
+            grid[end_y][grid_x] = EC
+            print_board(grid)
+        
+        #Starts the undo function, if no is selected
+        if undo_answer == n or undo_answer == N:
+            grid[start_y][start_x] = EC
+            grid[end_y][end_x] = WD
+            print_board(grid)
+            value_package["cur_turn"] = Players.Black
+
         #Error handling
         #For when an occupied cell is selected as the end point
         if grid[end_y][end_x] == BD:
@@ -104,7 +126,13 @@ def move(value_package, grid, wpc, bpc):
                     quit()
 
                 else:
-                     return move(value_package, grid, wpc, bpc)
+
+                    #If the undo function is selected
+                    if undo_answer == y or undo_answer == Y:
+                        grid[mid_y][mid_x] = BD
+                        print_board(grid)
+                        return move(value_package, grid, wpc, bpc)
+                        
             
 
             #For if the player attempts to capture his own pieces
@@ -140,16 +168,13 @@ def move(value_package, grid, wpc, bpc):
             if grid[start_y] == grid[end_y]:
                 print("You can only move diagonally")
                 return move(value_package, grid, wpc, bpc)
-
+            
             else:
-                grid[start_y][start_x] = EC
-                grid[end_y][end_x] = WD
                 print_board(grid)
-                value_package["cur_turn"] = Players.Black
                 return move(value_package, grid, wpc, bpc)
-
-
-
+                value_package["cur_turn"] = Players.Black
+            
+            
     
     if value_package["cur_turn"] == Players.Black:
         print("Black Turn\n")
@@ -173,6 +198,22 @@ def move(value_package, grid, wpc, bpc):
         #Define Mid points here
         mid_x = abs(start_x + end_x) // 2
         mid_y = abs(start_y + end_y) // 2
+
+        #Asks the user if they would like to undo the move
+        undo_answer =  print(input("Would you like to undo this move? Y/N: "))
+
+        #Starts the undo function, if yes is selected
+        if undo_answer == y or undo_answer == Y:
+            grid[start_y][start_x] = BD
+            grid[end_y][grid_x] = EC
+            print_board(grid)
+        
+        #Starts the undo function, if no is selected
+        if undo_answer == n or undo_answer == N:
+            grid[start_y][start_x] = EC
+            grid[end_y][end_x] = WD
+            print_board(grid)
+            value_package["cur_turn"] = Players.White
             
         #Error handling
         #For when an occupied cell is selected as the end point
@@ -205,17 +246,21 @@ def move(value_package, grid, wpc, bpc):
                     print("Black team wins")
                     quit()
 
+                    #If the undo function is selected
+                    if undo_answer == y or undo_answer == Y:
+                        grid[mid_y][mid_x] = EC
+
                 else:
                      return move(value_package, grid, wpc, bpc)
             
 
             #For if the player attempts to capture his own pieces
-           # if grid[mid_y][mid_x] == BD:
-            #    print("Illegal move, please try again")
-            #    return move(value_package, grid, wpc, bpc)
-           # if grid[mid_y][mid_x] == BK:
-            #   print("Illegal move, please try again")
-            #   return move(value_package, grid, wpc, bpc)
+            if grid[mid_y][mid_x] == BD:
+                print("Illegal move, please try again")
+                return move(value_package, grid, wpc, bpc)
+            if grid[mid_y][mid_x] == BK:
+                print("Illegal move, please try again")
+                return move(value_package, grid, wpc, bpc)
 
             #If Y coordinate is equal to 7, the draught becomes a King
             if end_y == 7:
@@ -235,51 +280,18 @@ def move(value_package, grid, wpc, bpc):
                 print("Cannot move that far away")
                 return move(value_package, grid, wpc, bpc)
 
-            if grid[start_x] == grid[end_x]:
+            if [start_x] == [end_x]:
                 print("You can only move diagonally")
                 return move(value_package, grid, wpc, bpc)
 
-            if grid[start_y] == grid[end_y]:
+            if [start_y] == [end_y]:
                 print("You can only move diagonally")
                 return move(value_package, grid, wpc, bpc)
+
 
             else:
-                grid[start_y][start_x] = EC
-                grid[end_y][end_x] = BD
                 print_board(grid)
-                value_package["cur_turn"] = Players.White
                 return move(value_package, grid, wpc, bpc)
-
-#Undo function
-def undo(value_package, grid, wpc, bpc):
-    if grid[end_y][end_x] == BD or grid[end_y][end_x] == BK:
-        return undo(value_package, grid, wpc, bpc)
-
-    #Asks the user if they would like to undo the move
-    answer = input("Would you like to undo this move? Y/N: ")
-
-    if answer == y or answer == Y:
-        grid[start_y][start_x] = BD or grid[start_y][start_x] = BK
-        grid[mid_y][mid_x] = WD or grid[mid_y][mid_x] = WK
-        grid[end_y][end_x] = EC
-        return undo(value_package, grid, wpc, bpc)
-
-    if grid[end_y][end_x] == WD or grid[end_y][end_x] == WK:
-        return undo(value_package, grid, wpc, bpc)
-
-    #Asks the user if they would like to undo the move
-    answer = input("Would you like to undo this move? Y/N: ")
-
-    if answer == y or answer == Y:
-        grid[start_y][start_x] = WD or grid[start_y][start_x] = WK
-        grid[mid_y][mid_x] = BD or grid[mid_y][mid_x] = BK
-        grid[end_y][end_x] = EC
-        return undo(value_package, grid, wpc, bpc)
-        
-        
-    
-        
-
-
+                value_package["cur_turn"] = Players.White
 
 main(grid, wpc, bpc)
