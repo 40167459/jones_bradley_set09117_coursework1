@@ -78,6 +78,24 @@ def move(value_package, grid, wpc, bpc):
         #Define Mid points here
         mid_x = abs(start_x + end_x) // 2
         mid_y = abs(start_y + end_y) // 2
+
+        #Asks the user if they would like to undo the move
+        undo_answer =  print(input("Would you like to undo this move? Y/N: "))
+ 
+        #Starts the undo function, if yes is selected
+        if undo_answer == y or undo_answer == Y:
+            grid[start_y][start_x] = WD
+            grid[end_y][grid_x] = EC
+            print_board(grid)
+            return move(value_package, grid, wpc, bpc)
+        
+        #Starts the undo function, if no is selected
+        if undo_answer == n or undo_answer == N:
+            grid[start_y][start_x] = EC
+            grid[end_y][end_x] = WD
+            print_board(grid)
+            value_package["cur_turn"] = Players.Black
+
             
         #Error handling
         #For when an occupied cell is selected as the end point
@@ -148,8 +166,6 @@ def move(value_package, grid, wpc, bpc):
                 return move(value_package, grid, wpc, bpc)
             
             else:
-                grid[start_y][start_x] = EC
-                grid[end_y][end_x] = WD
                 print_board(grid)
                 value_package["cur_turn"] = Players.Black
                 return move(value_package, grid, wpc, bpc)
