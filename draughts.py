@@ -80,21 +80,18 @@ def move(value_package, grid, wpc, bpc):
         mid_y = abs(start_y + end_y) // 2
 
         #Asks the user if they would like to undo the move
-        undo_answer =  print(input("Would you like to undo this move? Y/N: "))
+ #       undo_answer =  print(input("Would you like to undo this move? Y/N: "))
  
         #Starts the undo function, if yes is selected
-        if undo_answer == y or undo_answer == Y:
-            grid[start_y][start_x] = WD
-            grid[end_y][grid_x] = EC
-            print_board(grid)
-            return move(value_package, grid, wpc, bpc)
+ #       if undo_answer == y or undo_answer == Y:
+ #           grid[start_y][start_x] = WD
+ #           grid[end_y][grid_x] = EC
+ #           print_board(grid)
+ #           return move(value_package, grid, wpc, bpc)
         
         #Starts the undo function, if no is selected
-        if undo_answer == n or undo_answer == N:
-            grid[start_y][start_x] = EC
-            grid[end_y][end_x] = WD
-            print_board(grid)
-            value_package["cur_turn"] = Players.Black
+ #       if undo_answer == n or undo_answer == N:
+ #           return move(value_package, grid, wpc, bpc)
 
             
         #Error handling
@@ -128,6 +125,8 @@ def move(value_package, grid, wpc, bpc):
                     quit()
 
                 else:
+                    grid[start_y][start_x] = EC
+                    grid[end_y][end_x] = WD
                     return move(value_package, grid, wpc, bpc)
                                    
 
@@ -167,6 +166,8 @@ def move(value_package, grid, wpc, bpc):
             
             else:
                 print_board(grid)
+                grid[start_y][start_x] = EC
+                grid[end_y][end_x] = WD
                 value_package["cur_turn"] = Players.Black
                 return move(value_package, grid, wpc, bpc)
     
