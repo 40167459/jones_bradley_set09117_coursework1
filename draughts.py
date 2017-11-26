@@ -165,9 +165,9 @@ def move(value_package, grid, wpc, bpc):
                 return move(value_package, grid, wpc, bpc)
             
             else:
-                print_board(grid)
                 grid[start_y][start_x] = EC
                 grid[end_y][end_x] = WD
+                print_board(grid)
                 value_package["cur_turn"] = Players.Black
                 return move(value_package, grid, wpc, bpc)
     
